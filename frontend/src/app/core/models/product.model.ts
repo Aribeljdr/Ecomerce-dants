@@ -43,6 +43,7 @@ export interface ProductFilters {
   maxPrice?: number;
   search?: string;
   featured?: boolean;
+  onSale?: boolean;
   sort?: string;
   page?: number;
   limit?: number;

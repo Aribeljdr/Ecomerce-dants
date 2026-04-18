@@ -172,10 +172,11 @@ export class IdbService {
         const p = cursor.value as SeedProduct;
         let match = showAll ? true : p.isActive !== false;
 
-        if (match && brand   && p.brand !== brand)       match = false;
-        if (match && minP    !== undefined && p.price < minP)  match = false;
-        if (match && maxP    !== undefined && p.price > maxP)  match = false;
+        if (match && brand && p.brand !== brand)                        match = false;
+        if (match && minP  !== undefined && p.price < minP)            match = false;
+        if (match && maxP  !== undefined && p.price > maxP)            match = false;
         if (match && filters.featured !== undefined && p.featured !== filters.featured) match = false;
+        if (match && filters.onSale && !(p.compareAtPrice && p.compareAtPrice > p.price)) match = false;
         if (match && searchQ) {
           const inName = p.name.toLowerCase().includes(searchQ);
           const inDesc = p.description.toLowerCase().includes(searchQ);

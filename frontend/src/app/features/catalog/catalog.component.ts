@@ -451,9 +451,9 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  private loadBrands(categorySlug: string | null): void {
+  private loadBrands(_categorySlug: string | null): void {
     this.brandsLoading.set(true);
-    this.productService.getBrands(categorySlug ?? undefined).subscribe({
+    this.productService.getBrands().subscribe({
       next: res => { this.brands.set(res.brands); this.brandsLoading.set(false); },
       error: () => this.brandsLoading.set(false),
     });
@@ -474,7 +474,7 @@ export class CatalogComponent implements OnInit {
     const brand = this.selectedBrand();
     if (brand) params['brands'] = brand;
 
-    if (this.onSale()) params['featured'] = 'true';
+    if (this.onSale()) params['onSale'] = 'true';
 
     this.productService.getProductsRaw(params).subscribe({
       next: res => {

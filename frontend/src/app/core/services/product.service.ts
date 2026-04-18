@@ -14,15 +14,16 @@ export class ProductService {
 
   getProductsRaw(queryParams: Record<string, string>): Observable<ProductsResponse> {
     const filters: ProductFilters = {
-      category:  queryParams['category']  || undefined,
-      brand:     queryParams['brand']     || undefined,
-      search:    queryParams['search']    || undefined,
-      sort:      queryParams['sort']      || undefined,
-      minPrice:  queryParams['minPrice']  ? +queryParams['minPrice']  : undefined,
-      maxPrice:  queryParams['maxPrice']  ? +queryParams['maxPrice']  : undefined,
-      page:      queryParams['page']      ? +queryParams['page']      : undefined,
-      limit:     queryParams['limit']     ? +queryParams['limit']     : undefined,
-      featured:  queryParams['featured']  ? queryParams['featured'] === 'true' : undefined,
+      category:  queryParams['category'] || queryParams['categorySlug'] || undefined,
+      brand:     queryParams['brand']    || queryParams['brands']       || undefined,
+      search:    queryParams['search']   || undefined,
+      sort:      queryParams['sort']     || undefined,
+      minPrice:  queryParams['minPrice'] ? +queryParams['minPrice']  : undefined,
+      maxPrice:  queryParams['maxPrice'] ? +queryParams['maxPrice']  : undefined,
+      page:      queryParams['page']     ? +queryParams['page']      : undefined,
+      limit:     queryParams['limit']    ? +queryParams['limit']     : undefined,
+      featured:  queryParams['featured'] ? queryParams['featured'] === 'true' : undefined,
+      onSale:    queryParams['onSale']   === 'true' ? true : undefined,
     };
     return this.getProducts(filters);
   }
@@ -160,10 +161,11 @@ export class ProductService {
     const idbFilters = showAll ? { ...filters, showAll: true } as any : filters;
     const products = await this.idb.getProductsFiltered(idbFilters);
 
-    if (filters.sort === 'price_asc')       products.sort((a, b) => a.price - b.price);
-    else if (filters.sort === 'price_desc') products.sort((a, b) => b.price - a.price);
-    else if (filters.sort === 'rating')     products.sort((a, b) => b.rating - a.rating);
-    else if (filters.sort === 'newest')     products.sort((a, b) =>
+    const s = filters.sort ?? '';
+    if      (s === '-price'    || s === 'price_desc') products.sort((a, b) => b.price - a.price);
+    else if (s === 'price'     || s === 'price_asc')  products.sort((a, b) => a.price - b.price);
+    else if (s === '-rating'   || s === 'rating')     products.sort((a, b) => b.rating - a.rating);
+    else if (s === '-createdAt'|| s === 'newest')     products.sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
