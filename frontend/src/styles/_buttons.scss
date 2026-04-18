@@ -1,0 +1,80 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 12px var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:active { transform: none; }
+  }
+
+  // Primario: Comprar / Checkout
+  &--primary {
+    background: var(--color-black);
+    color: var(--color-white);
+
+    &:hover:not(:disabled) {
+      background: #333;
+    }
+  }
+
+  // Secundario: Añadir al carrito
+  &--secondary {
+    background: var(--color-white);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+
+    &:hover:not(:disabled) {
+      background: var(--color-surface);
+      border-color: #b0b0b5;
+    }
+  }
+
+  // Ghost: Cancelar / Volver
+  &--ghost {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:hover:not(:disabled) {
+      text-decoration: underline;
+    }
+  }
+
+  // Tamaños
+  &--sm {
+    padding: 8px var(--space-2);
+    font-size: var(--font-size-sm);
+  }
+
+  &--lg {
+    padding: 16px var(--space-4);
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+  }
+
+  &--full {
+    width: 100%;
+  }
+}

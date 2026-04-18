@@ -1,0 +1,43 @@
+// Design System — PC Parts eCommerce
+@use 'styles/variables';
+@use 'styles/typography';
+@use 'styles/buttons';
+@use 'styles/forms';
+@use 'styles/skeleton';
+@use 'styles/utilities';
+
+// Reset
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: var(--font-family);
+}
+
+// Padding top para compensar navbar sticky
+.page-content {
+  padding-top: var(--navbar-height);
+}
